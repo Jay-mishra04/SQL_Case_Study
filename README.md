@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository contains a SQL case study focusing on a movie dataset sourced from Rotten Tomatoes. The dataset provides detailed information about movies, including various metrics on critic and audience ratings.
+This repository contains a SQL case study focusing on a movie dataset sourced from [Kaggle](https://www.kaggle.com/datasets/stefanoleone992/rotten-tomatoes-movies-and-critic-reviews-dataset?select=rotten_tomatoes_movies.csv). The dataset provides detailed information about movies, including various metrics on critic and audience ratings.
 
 ## Dataset
 
