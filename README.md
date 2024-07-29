@@ -310,15 +310,194 @@ ORDER BY release_year DESC;
 
 <p float="left">
   <img src="Images/12.png" width="50%" />
-  <img src="e12.png" width="49%" />
+  <img src="Images/e14.png" width="49%" />
+</p>>
+
+
+## Findings
+- Most number of movies are released in the month of January and no movies are released in the month of july.
+
+### 13.Find the report chard of top 10 actors by audience count. 
+**Query:**
+```sql
+ SELECT lead_actor, ROUND(AVG(tomatometer_rating)) AS avg_tomatometer_rating,
+	ROUND(AVG(tomatometer_count)) AS avg_tomatometer_count,
+    ROUND(AVG(audience_rating)) AS avg_audience_rating,
+    ROUND(AVG(audience_count)) AS avg_audience_count,
+	COUNT(*) AS movie_count
+    FROM movies
+    GROUP BY lead_actor ORDER BY avg_audience_count DESC LIMIT 10;
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/13.png" width="100%" />
+ 
 </p>>
 
 
 ## Findings
 - All the relevant insights related to the question can found from the table itself.
+
+### 14. Is there a relationship between genres and average audience_ratings.
+**Query:**
+```sql
+SELECT genres, ROUND(AVG(audience_rating)) as avg_ratings FROM movies
+GROUP BY genres ORDER BY avg_ratings DESC;
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/14.png" width="50%" />
+  <img src="Images/e15.png" width="49%" />
+</p>>
+
+
+## Findings
+- Documentary movies have the highest ratings and horror movies have the least ratings.
+
+### 15. How many movies released on each day of the week.
+**Query:**
+```sql
+with cte as(
+SELECT DAYOFWEEK(original_release_date) as day_of_week, COUNT(*) AS movie_counts FROM movies 
+GROUP BY DAYOFWEEK(original_release_date))
+SELECT CASE  WHEN day_of_week = 1 THEN 'Sunday' 
+            WHEN day_of_week =2 THEN 'Monday'
+            WHEN day_of_week =3 THEN 'Tuesday'
+            WHEN day_of_week =4 THEN 'Wednesday'
+            WHEN day_of_week =5 THEN 'Thursday'
+            WHEN day_of_week =6 THEN 'Friday'
+            WHEN day_of_week =7 THEN 'Saturday'
+        END AS day_name, movie_counts FROM cte ORDER BY movie_counts DESC;
+        
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/15.png" width="100%" />
+ 
+</p>>   
   
 
+## Findings
+- All the relevant insights related to the question can found from the table itself.
 
+### 16. Find the number of movies in each genre,  the average duration of each genre of movies, movie_counts their average tomatometer_ratigns and audience_ratings.
+**Query:**
+```sql
+SELECT genres AS genre, COUNT(*) AS movie_count,
+    ROUND(AVG(runtime)) AS avg_duration, ROUND(AVG(tomatometer_rating)) AS avg_tomatometer_rating,
+    ROUND(AVG(audience_rating)) AS avg_audience_rating
+FROM movies GROUP BY genres
+ORDER BY movie_count DESC;
+        
+```
 
+## Visualization
 
+<p float="left">
+  <img src="Images/16.png" width="100%" />
+ 
+</p>>   
+  
 
+## Findings
+- All the relevant insights related to the question can found from the table itself.
+
+### 17. Compare TOP 10 production companies in terms of number of movies and ratings.
+**Query:**
+```sql
+SELECT 
+    production_company, COUNT(*) AS movie_count,
+    ROUND(AVG(tomatometer_rating)) AS avg_tomatometer_rating,
+    ROUND(AVG(audience_rating)) AS avg_audience_rating
+FROM movies GROUP BY production_company 
+ORDER BY movie_count DESC, avg_tomatometer_rating DESC, avg_audience_rating DESC LIMIT 10;
+        
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/17.png" width="100%" />
+ 
+</p>>   
+  
+
+## Findings
+- All the relevant insights related to the question can found from the table itself.
+
+###  18. Find 10 movies which have largest difference in the scores between tomatometer ratings and audience ratings.
+**Query:**
+```sql
+SELECT movie_title, tomatometer_rating, tomatometer_count, audience_rating, audience_count,
+    ABS(tomatometer_rating - audience_rating) AS rating_difference
+FROM  movies WHERE tomatometer_rating > 0 AND audience_count> 1000
+ORDER BY rating_difference DESC LIMIT 10;
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/18.png" width="100%" />
+ 
+</p>>   
+  
+
+## Findings
+- All the relevant insights related to the question can found from the table itself.
+
+###  19. Find top 10 combination of director, actor and author which will produce a hit movies.
+**Query:**
+```sql
+SELECT 
+    lead_director, lead_actor, lead_author, COUNT(*) AS movie_count,
+    ROUND(AVG(tomatometer_rating)) AS avg_tomatometer_rating,
+    rOUND(AVG(audience_rating)) AS avg_audience_rating,
+    ROUND(AVG(average_rating))  AS avg_combined_rating
+FROM movies GROUP BY lead_director, lead_actor, lead_author
+HAVING  movie_count > 1 ORDER BY avg_combined_rating DESC, movie_count DESC
+LIMIT 10;
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/19.png" width="100%" />
+ 
+</p>>   
+  
+
+## Findings
+- All the relevant insights related to the question can found from the table itself.
+
+###  20. Is there a relation between content_rating and audience ratings.
+**Query:**
+```sql
+SELECT content_rating, ROUND(AVG(audience_rating)) AS avg_audience_rating,
+    COUNT(*) AS movie_count
+FROM movies GROUP BY content_rating
+ORDER BY avg_audience_rating DESC;
+```
+
+## Visualization
+
+<p float="left">
+  <img src="Images/20.png" width="100%" />
+ 
+</p>>   
+  
+
+## Findings
+- All the relevant insights related to the question can found from the table itself.
+
+# Conclusion
+This project demonstrates the use of SQL queries to analyze movie data from Rotten Tomatoes. The insights gained from the analysis offer valuable information on movie ratings, genres, and industry trends, providing a deeper understanding of film performance and audience preferences over time.
+
+Feel free to explore the code and documentation provided in this repository to gain a deeper understanding of the project and replicate the results and if you have any questions or suggestions, please don't hesitate to reach out on this [email](jabcd.1997@gmail.com)
+
+Happy Exploring!
